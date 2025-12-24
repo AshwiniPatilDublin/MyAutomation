@@ -8,40 +8,39 @@ pipeline {
                 checkout scm
             }
         }
+
         stage('Build') {
             steps {
                 echo 'Building project...'
-                // Use 'bat' for Windows, 'sh' for Linux/macOS
                 bat 'mvn clean install'
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvn test'
+                bat 'mvn test surefire-report:report'
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // Add deploy commands here if any
             }
         }
     }
 
     post {
         always {
-            echo 'Archiving test results...'
-            // Archive JUnit test reports for test trend
-            junit '**/target/surefire-reports/*.xml'
-        }
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed!'
+            echo 'Publishing Surefire HTML Report...'
+            publishHTML([
+                reportDir: 'target/site',
+                reportFiles: 'surefire-report.html',
+                reportName: 'Surefire Test Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: false
+            ])
         }
     }
 }
-
-    
