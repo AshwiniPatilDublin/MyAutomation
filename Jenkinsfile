@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build & Test') {
             steps {
-                echo 'Building and testing...'
-                bat 'mvn clean test surefire-report:report'
+                echo 'Building, testing and generating site report...'
+                bat 'mvn clean test site'
             }
         }
 
