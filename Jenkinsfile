@@ -11,13 +11,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project...'
-                sh 'mvn clean install'
+                // Use 'bat' for Windows, 'sh' for Linux/macOS
+                bat 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         stage('Deploy') {
@@ -27,4 +28,20 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo 'Archiving test results...'
+            // Archive JUnit test reports for test trend
+            junit '**/target/surefire-reports/*.xml'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
 }
+
+    
