@@ -2,24 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Build & Test') {
             steps {
-                echo 'Checking out code from GitHub...'
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Building project...'
-                bat 'mvn clean install'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                bat 'mvn test surefire-report:report'
+                echo 'Building and testing...'
+                bat 'mvn clean test surefire-report:report'
             }
         }
 
