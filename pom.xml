@@ -19,6 +19,8 @@
             <artifactId>rest-assured</artifactId>
             <version>5.5.6</version>
         </dependency>
+
+
     </dependencies>
 
 </project>
