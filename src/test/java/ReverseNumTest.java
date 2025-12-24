@@ -1,14 +1,12 @@
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 
-public class ReverseNum {
+public class ReverseNumTest {
     public static void main(String[] args) {
         Response response = given().baseUri("https://dummyjson.com").get("/users").then()
                 .extract()
